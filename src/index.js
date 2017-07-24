@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Layout from './components/Layout';
+import App from './components/App';
 import './styles/index.sass';
 
 ReactDOM.render(
-  <Layout />,
+  <App />,
   document.getElementById('app')
 );
