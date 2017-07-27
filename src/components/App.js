@@ -5,15 +5,16 @@ import Preview from './Preview';
 import marked from 'marked';
 
 export default class App extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             value: '__This is a markdown previewer__'
         }
 
         marked.setOptions({
             gfm: true,
-            breaks: true
+            breaks: true,
+            sanitize: true
         });
 
         this.getUserInput = this.getUserInput.bind(this);
