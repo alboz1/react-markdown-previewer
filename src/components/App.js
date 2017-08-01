@@ -1,14 +1,15 @@
 import React from 'react';
 import Markdown from './Markdown';
 import Preview from './Preview';
-
+import Header from './Header';
 import marked from 'marked';
 
 export default class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            value: '__This is a markdown previewer__'
+            value: '__This is a markdown previewer__',
+            column: false
         }
 
         marked.setOptions({
@@ -18,6 +19,7 @@ export default class App extends React.Component {
         });
 
         this.getUserInput = this.getUserInput.bind(this);
+        this.changeLayout = this.changeLayout.bind(this);
     }
 
     getUserInput(e) {
@@ -29,13 +31,23 @@ export default class App extends React.Component {
         return {__html: markUp};
     }
 
+    changeLayout(e) {
+        if (e.currentTarget.id === 'col') {
+            this.setState({column: true});
+        } else {
+            this.setState({column: false});
+        }
+    }
+
     render() {
         return (
-            <main className="container">
-                <h1 className="head-title">Markdown Previewer</h1>
-                <Markdown value={this.state.value} onChange={this.getUserInput}/>
-                <Preview renderMarkdown={this.getMarkdownText()} />
-            </main>
+            <div className="container">
+                <Header active={this.state.column} onClick={this.changeLayout}/>
+                <main className={this.state.column ? "col" : ""}>
+                    <Markdown value={this.state.value} onChange={this.getUserInput}/>
+                    <Preview renderMarkdown={this.getMarkdownText()} />
+                </main>
+            </div>
         );
     }
 }
